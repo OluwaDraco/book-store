@@ -1,42 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from 'react-router-dom';
 
-import axios from 'axios'
-import { Component } from 'react';
+import Header from './components/Header';
+import Courses from './components/Courses';
+import SignIn from './components/SignIn';
+import SignOut from './components/SignOut';
+import SignUp from './components/SignUp';
+import CourseDetails from './components/CourseDetail';
 
-const api = axios.create({
-  apiBaseUrl: 'http://localhost:5000/api/courses',
-})
+//context
+import withContext from "./context/Context"
+const HeaderWithContext = withContext(Header);
 
-export default ()=>{
 
-//   constructor() {
-//     super();
-//     axios.get('http://localhost:5000/api/courses')
-//     .then(res=>console.log(res.data))
-//   }
-// render() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+//Components
 
-      <body>
 
-      </body>
+
+export default () =>{
+  <Router>
+    <div>
+    <h1>hello</h1>
+      <HeaderWithContext />
+      <Routes>
+        <Route exact path='/' element={<Courses/>} />
+      </Routes>
     </div>
-  );
+  </Router>
 }
-// }
