@@ -21,7 +21,7 @@ const HeaderWithContext = withContext(Header);
 
 
 
-export default () =>{
+const App =() =>(
   <Router>
     <div>
     <h1>hello</h1>
@@ -31,4 +31,6 @@ export default () =>{
       </Routes>
     </div>
   </Router>
-}
+)
+
+export default App;

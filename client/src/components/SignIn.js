@@ -24,7 +24,7 @@ export default class SignIn extends Component{
                     cancel ={this.cancel}
                     submit={this.submit}
                     errors = {errors}
-                    submitButtonText ="Sign Up"
+                    submitButtonText ="Sign In"
                     elements={ ()=>(
                         <React.Fragment>
                             <input

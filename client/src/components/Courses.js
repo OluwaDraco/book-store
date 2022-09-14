@@ -1,23 +1,38 @@
-import React, {useState} from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
-const Courses = ()=>{
-
-    const [courseList, setCourseList] = useState(null);
-
-    axios.get('http://localhost:5000/api/courses')
-   .then(res=> setCourseList(courseList=res.data))
 
 
+class Courses extends React.Component{
 
-    return (
-        <div className="wrap main--grid">
-            {courseList.map((course, i)=>
-            <Link key={i} className="course--module course--link" to={'/courses'}>
-            <h2 className="course--label">Course</h2>
-            <h3 className="course--title">{course.title}</h3>
-            </Link>)}
+    state= {
+        courses:[]
+    }
+    componentDidMount(){
+        fetch('http://localhost:5000/api/courses')
+        .then((res)=>res.json())
+        .then((response)=>this.setState({courses:response}))
+        .catch(err=>{
+            console.log("error fetching data",err)
+        })
+    }
+    render(){
+
+        const courses = this.state.courses
+        console.log(courses)
+        const courseList = courses.map((course)=>{
+            return(
+                <Link key={course.id} className="course--module course--link" to={`/courses/{course.id}`}>
+                <h2 className="course--label">Course</h2>
+                <h3 className="course--title">{course.title}</h3>
+                </Link>
+            )
+        }
+           )
+        
+
+        return (
+            <div className="wrap main--grid">
+            {courseList}
 
             <Link>
                 <span className="course--add--title">
@@ -26,9 +41,12 @@ const Courses = ()=>{
                         New Course
                 </span>
             </Link>
-        </div>
-    )
+            </div>
+        )}}
+            
+         
+        
 
-}
+
 
 export default Courses;
