@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import Data from "./Data";
+import Data from './contexts/Data'
 import Cookies from 'js-cookie' 
 const Context = React.createContext();
 
@@ -25,7 +25,7 @@ export class Provider extends Component{
             data: this.data,
             actions:{
                 signIn: this.signIn,
-                signOut:this.sign,
+                signOut:this.signOut,
 
             }
         }
@@ -75,10 +75,10 @@ export const Consumer = Context.Consumer;
 
 // AN HOC that wraps the  component in a context consumer  component
 
-export default function withContext(component){
+export default function withContext(Component){
     return function ContextComponent(props){
         <Context.Consumer>
-            {context => <Component {...props} context={context} />}
+            {(context) => <Component {...props} context={context} />}
         </Context.Consumer>
     }
 }

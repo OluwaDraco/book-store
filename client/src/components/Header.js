@@ -8,10 +8,12 @@ export default class Header extends React.PureComponent{
     
 
     return(
-        <div>
-             <div className="wrap header--flex">
+        
+            <header>
+            <h1>hi</h1>
+                 <div className="wrap header--flex">
                 <h1 className="header--logo">
-                <Link to="index.html">Courses</Link>
+                <Link to="/">Courses</Link>
                 </h1>
                 <nav>
                 {
@@ -23,7 +25,7 @@ export default class Header extends React.PureComponent{
                         </ul>
 
                     </React.Fragment>
-                    :
+                    :(
                     <React.Fragment>
 
                     <ul className="header--signedout">
@@ -35,12 +37,11 @@ export default class Header extends React.PureComponent{
                     </li>
                     </ul>
 
-                    </React.Fragment>
+                    </React.Fragment>)
                 }           
                 </nav>
-            </div>
-        </div>
-   
+            </div>   
+            </header>
     );
 }
 }

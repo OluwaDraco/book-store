@@ -55,8 +55,8 @@ async createUser(user){
         throw new Error();
     }
 }
-async createCourse(course){
-    const response = await this.api('/courses', 'POST', course);
+async createCourse(course,username, password){
+    const response = await this.api('/courses', 'POST', course,true,{username, password});
 
     if(response.status ===201){
         return[];
@@ -70,6 +70,39 @@ async createCourse(course){
         throw new Error();
     }
 }
+
+async updateCourse(courseToUpdate, id ,username,password){
+        const response = await this.api(`/courses/${id}`, 'PUT', courseToUpdate,true,{username, password});
+    
+        if(response.status ===204){
+            return[];
+        }
+    
+        else if(response.status === 400){
+            return response.json().then(data => {return data.errors})
+        }
+    
+        else{
+            throw new Error();
+        }
+    
+    }
+
+    async deleteCourse(username,password,id,userId){
+        const response = await this.api(`/courses/${id}`, 'DELETE', userId,true,{username, password});
+        if(response.status ===204){
+            return[];
+        }
+    
+        else if(response.status === 400){
+            return response.json().then(data => {return data.errors})
+        }
+    
+        else{
+            throw new Error();
+        }
+    }
+
 
 
 }

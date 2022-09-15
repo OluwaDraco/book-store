@@ -5,6 +5,9 @@ import {
   Routes,
 } from 'react-router-dom';
 
+
+
+
 import Header from './components/Header';
 import Courses from './components/Courses';
 import SignIn from './components/SignIn';
@@ -13,7 +16,7 @@ import SignUp from './components/SignUp';
 import CourseDetails from './components/CourseDetail';
 
 //context
-import withContext from "./context/Context"
+import withContext from "./Context"
 const HeaderWithContext = withContext(Header);
 
 
@@ -24,10 +27,10 @@ const HeaderWithContext = withContext(Header);
 const App =() =>(
   <Router>
     <div>
-    <h1>hello</h1>
       <HeaderWithContext />
+      
       <Routes>
-        <Route exact path='/' element={<Courses/>} />
+        <Route exact path='/' element={<Courses />} />
       </Routes>
     </div>
   </Router>

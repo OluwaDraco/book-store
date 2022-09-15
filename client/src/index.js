@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './styles/reset.css';
 import './styles/global.css';
 
-import { Provider } from './context/Context';
+import { Provider } from './Context';
 import App from './App'
 
 ReactDOM.render(
