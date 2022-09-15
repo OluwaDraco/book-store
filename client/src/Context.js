@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import Data from './contexts/Data'
 import Cookies from 'js-cookie' 
+
 const Context = React.createContext();
 
 
@@ -77,8 +78,10 @@ export const Consumer = Context.Consumer;
 
 export default function withContext(Component){
     return function ContextComponent(props){
-        <Context.Consumer>
+        return(
+            <Context.Consumer>
             {(context) => <Component {...props} context={context} />}
         </Context.Consumer>
+        )
     }
 }

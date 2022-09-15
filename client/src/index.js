@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 
 import './styles/reset.css';
 import './styles/global.css';
@@ -7,8 +7,9 @@ import './styles/global.css';
 import { Provider } from './Context';
 import App from './App'
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
   <Provider>
     <App />
-  </Provider>,
-  document.getElementById('root'));
+  </Provider>
+);

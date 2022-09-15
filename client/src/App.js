@@ -2,7 +2,7 @@ import React from 'react';
 import {
   BrowserRouter as Router,
   Route,
-  Routes,
+  Switch,
 } from 'react-router-dom';
 
 
@@ -18,6 +18,10 @@ import CourseDetails from './components/CourseDetail';
 //context
 import withContext from "./Context"
 const HeaderWithContext = withContext(Header);
+const SignInWithContext = withContext(SignIn);
+const SignUpWithContext = withContext(SignUp);
+const CourseDetailsWithContext = withContext(CourseDetails);
+
 
 
 //Components
@@ -29,9 +33,12 @@ const App =() =>(
     <div>
       <HeaderWithContext />
       
-      <Routes>
-        <Route exact path='/' element={<Courses />} />
-      </Routes>
+      <Switch>
+        <Route  exact path='/' component={Courses} />
+        <Route  path='/courses/:id' component={CourseDetailsWithContext} />
+        <Route path="/signin" component={SignInWithContext}/> 
+        <Route path="/signup" component={SignUpWithContext}/> 
+      </Switch>
     </div>
   </Router>
 )

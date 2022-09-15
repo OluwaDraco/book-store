@@ -1,16 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default class Header extends React.PureComponent{
-    render(){
-        const {context} = this.props
-        const authUser = context.authenticatedUser;
-    
 
-    return(
-        
-            <header>
-            <h1>hi</h1>
+export default class Header extends React.PureComponent {
+    render() {
+      const { context } = this.props;
+    
+      const authUser = context.authenticatedUser;
+    return(    
+           <div>
+             <header>
                  <div className="wrap header--flex">
                 <h1 className="header--logo">
                 <Link to="/">Courses</Link>
@@ -30,10 +29,10 @@ export default class Header extends React.PureComponent{
 
                     <ul className="header--signedout">
                     <li>
-                    <Link to="/sign-up">Sign Up</Link>
+                    <Link to="/signup">Sign Up</Link>
                     </li>
                     <li>
-                    <Link to="/sign-in">Sign In</Link>
+                    <Link to="/signin">Sign In</Link>
                     </li>
                     </ul>
 
@@ -42,6 +41,8 @@ export default class Header extends React.PureComponent{
                 </nav>
             </div>   
             </header>
+           </div>
     );
 }
+
 }
