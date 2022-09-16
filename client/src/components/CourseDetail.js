@@ -8,7 +8,7 @@ const CourseDetails =(props)=>{
     const authUser = context.authenticatedUser
     const [courseDetails, setCourseDetails] = useState({
         courseDetails:[],
-        title:"",
+        title:" ",
         description:"",
         estimatedTime:"",
         materialsNeeded:"",
@@ -21,14 +21,15 @@ const CourseDetails =(props)=>{
     fetch(`http://localhost:5000/api/courses/${id}`)
     .then((res)=>res.json())
     .then((res)=>console.log(res))
-    .then((response,)=>(
+    .then((res)=>(
         setCourseDetails({
-            course:response,
-            title:response.title,
-            description:response.description,
-            materialsNeeded:response.materialsNeeded,
-            firstName:response.User.firstName,
+            courseDetails:res,
+            title:res.title,
+            description:res.description,
+            materialsNeeded:res.materialsNeeded,
+            firstName:res.User.firstName,
         })
+        .then(console.log(CourseDetails.title))
         
     ))
     .catch(err=>{
