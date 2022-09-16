@@ -1,12 +1,40 @@
-import React, {useState} from "react";
-import { Link } from "react-router-dom";
+import React, {useState,useEffect} from "react";
+import { Link,useParams, useHistory } from "react-router-dom";
 import axios from "axios";
 
-const CourseDetails =()=>{
-    const [CourseDetail, setCourseDetail] = useState(null);
+const CourseDetails =(props)=>{
+    const history = useHistory()
+    const {context} = props
+    const authUser = context.authenticatedUser
+    const [courseDetails, setCourseDetails] = useState({
+        courseDetails:[],
+        title:"",
+        description:"",
+        estimatedTime:"",
+        materialsNeeded:"",
+        firstName:"",
+    });
 
-    axios.get('http://localhost:5000/api/courses/:id')
-   .then(res=> setCourseDetail(CourseDetail=res.data))
+    const {id} = useParams()
+
+   useEffect(()=>{
+    fetch(`http://localhost:5000/api/courses/${id}`)
+    .then((res)=>res.json())
+    .then((res)=>console.log(res))
+    .then((response,)=>(
+        setCourseDetails({
+            course:response,
+            title:response.title,
+            description:response.description,
+            materialsNeeded:response.materialsNeeded,
+            firstName:response.User.firstName,
+        })
+        
+    ))
+    .catch(err=>{
+        console.log("error fetching data",err)
+    })
+   },[id,history])
 
    return(
     <div>
@@ -24,19 +52,17 @@ const CourseDetails =()=>{
                 <div className="main--flex">
                     <div>
                         <h3 className="course--detail--title">Course</h3>
-                        <h4 className="course--name">{CourseDetail.title}</h4>
-                        <p>By {CourseDetail.User.firstName}</p>
-                        <p>{CourseDetail.description}</p>
+                        <h4 className="course--name">{courseDetails.title}</h4>
+                        <p>By {courseDetails.firstName}</p>
+                        <p>{courseDetails.description}</p>
                     </div>
                     <div>
                         <h3 className="course--detail--title">Estimated Time</h3>
-                        <p>{CourseDetail.estimatedTime}</p>
+                        <p>{courseDetails.estimatedTime}</p>
 
                         <h3 className="course--detail--title">Materials Needed</h3>
                         <ul className="course--detail--list">
-                        {CourseDetail.map((material,i)=>{
-                            <li key={i}>{material}</li>
-                        })}
+                        {courseDetails.materialsNeeded}
                         </ul>
 
                     </div>
@@ -49,4 +75,4 @@ const CourseDetails =()=>{
 
 }
 
-export default CourseDetails;
+export default CourseDetails

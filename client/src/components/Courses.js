@@ -18,9 +18,9 @@ class Courses extends React.Component{
     render(){
 
         const courses = this.state.courses
-        const courseList = courses.map((course,i)=>{
+        const courseList = courses.map((course)=>{
             return(
-                <Link key={i} className="course--module course--link" to={`/courses/{course.id}`}>
+                <Link  className="course--module course--link" to={`/courses/${course.userId}`} key={course.userId}>
                 <h2 className="course--label">Course</h2>
                 <h3 className="course--title">{course.title}</h3>
                 </Link>
