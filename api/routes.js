@@ -47,6 +47,7 @@ router.get(
     asyncHandle(async (req, res) => {
         const courses = await Course.findAll({
             attributes: [
+                "id",
                 "description",
                 "title",
                 "userId",
@@ -71,6 +72,7 @@ router.get(
     asyncHandle(async (req, res) => {
         const course = await Course.findByPk(req.params.id, {
             attributes: [
+                "id",
                 "description",
                 "title",
                 "userId",
