@@ -4,18 +4,18 @@ import Form from "./Form";
 
 class SignUp extends Component{
     state= {
-        firstname:"",
-        lastname:"",
-        email:"",
+        firstName:"",
+        lastName:"",
+        emailAddress:"",
         password:"",
         errors:[]
     }
 
     render(){
         const {
-            firstname,
-            lastname,
-            email,
+            firstName,
+            lastName,
+            emailAddress,
             password,
             errors
         } =this.state;
@@ -36,15 +36,15 @@ class SignUp extends Component{
                             id="firstName"
                             name="firstName"
                             type="text"
-                            value={firstname}
+                            value={firstName}
                             onChange={this.change}
                             placeholder="First Name" />
 
                             <input
                             id="lastName"
-                            name="lastname"
+                            name="lastName"
                             type="text"
-                            value={lastname}
+                            value={lastName}
                             onChange={this.change}
                             placeholder="Last Name" />
 
@@ -52,9 +52,9 @@ class SignUp extends Component{
                             id="emailAddress"
                             name="emailAddress"
                             type="email"
-                            value={email}
+                            value={emailAddress}
                             onChange={this.change}
-                            placeholder="User Name" />
+                            placeholder="Email" />
 
                             <input
                             id="password"
@@ -66,7 +66,7 @@ class SignUp extends Component{
                         </React.Fragment>
                     )}
                 />
-                 <p>Already have a user account? Click here to <Link to="sign-in.html">sign in</Link>!</p>
+                 <p>Already have a user account? Click here to <Link to="">sign in</Link>!</p>
             </div>
         </div>
     )
@@ -85,17 +85,17 @@ class SignUp extends Component{
     submit =()=>{
         const {context} = this.props;
         const {
-            firstname,
-            lastname,
-            email,
+            firstName,
+            lastName,
+            emailAddress,
             password,
 
         }=this.state
 
         const user = {
-            firstname,
-            lastname,
-            email,
+            firstName,
+            lastName,
+            emailAddress,
             password,
 
         }
@@ -106,9 +106,12 @@ class SignUp extends Component{
                 this.setState({errors})
             }
             else{
-                this.props.history.push('/authenticated')
-            }
-        })
+                context.actions.signIn(emailAddress, password)
+                .then(() => {
+                    this.props.history.push("/");
+            })}
+        }
+        )
         .catch(err =>{
             console.log(err)
             this.props.history.push("/error")

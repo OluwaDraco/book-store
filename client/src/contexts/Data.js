@@ -2,13 +2,17 @@
 import config from "./Config";
 
 export default class Data {
-    api(path, method='GET', body= null,requiresAuth= false, credentials=null) {
+    api(path, method='GET', 
+    body= null,
+    requiresAuth= false, 
+    credentials=null) 
+    {
         const url = config.apiBaseUrl + path;
 
         const options = {
             method,
             headers :{
-                'content:-Type': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json; charset=utf-8',
             },
         }
     
@@ -18,7 +22,7 @@ export default class Data {
     }
 
     if(requiresAuth){
-        const encodedCredentials = btoa(`${credentials.username}:${credentials.password}`)
+        const encodedCredentials = window.btoa(`${credentials.emailAddress}:${credentials.password}`)
 
       options.headers['Authorization'] = `Basic ${encodedCredentials}`
     }
@@ -26,8 +30,8 @@ export default class Data {
     return fetch(url,options);
 }
 
-async getUser(username, password){
-    const response = await this.api('/users','GET', null , true,{username,password})
+async getUser(emailAddress, password){
+    const response = await this.api('/users','GET', null , true,{emailAddress,password})
 
     if(response.status === 200){
        return response.json().then(data=>data)
@@ -55,8 +59,8 @@ async createUser(user){
         throw new Error();
     }
 }
-async createCourse(course,username, password){
-    const response = await this.api('/courses', 'POST', course,true,{username, password});
+async createCourse(course,emailAddress, password){
+    const response = await this.api('/courses', 'POST', course,true,{emailAddress, password});
 
     if(response.status ===201){
         return[];
@@ -71,8 +75,8 @@ async createCourse(course,username, password){
     }
 }
 
-async updateCourse(courseToUpdate, id ,username,password){
-        const response = await this.api(`/courses/${id}`, 'PUT', courseToUpdate,true,{username, password});
+async updateCourse(courseToUpdate, id ,emailAddress,password){
+        const response = await this.api(`/courses/${id}`, 'PUT', courseToUpdate,true,{emailAddress, password});
     
         if(response.status ===204){
             return[];
@@ -88,8 +92,8 @@ async updateCourse(courseToUpdate, id ,username,password){
     
     }
 
-    async deleteCourse(username,password,id,userId){
-        const response = await this.api(`/courses/${id}`, 'DELETE', userId,true,{username, password});
+    async deleteCourse(emailAddress,password,id,userId){
+        const response = await this.api(`/courses/${id}`, 'DELETE', userId,true,{emailAddress, password});
         if(response.status ===204){
             return[];
         }

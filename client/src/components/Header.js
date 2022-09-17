@@ -7,6 +7,7 @@ export default class Header extends React.PureComponent {
       const { context } = this.props;
     
       const authUser = context.authenticatedUser;
+      console.log(authUser)
     return(    
            <div>
              <header>
@@ -19,8 +20,8 @@ export default class Header extends React.PureComponent {
                     authUser ?
                     <React.Fragment>
                     <ul className="header--signedin">
-                            <li>Welcome, {authUser.name}</li>
-                            <Link to="/sign-out">Sign Out</Link>
+                            <li>Welcome, {authUser.firstName}</li>
+                            <Link to="/signOut">Sign Out</Link>
                         </ul>
 
                     </React.Fragment>
@@ -29,10 +30,10 @@ export default class Header extends React.PureComponent {
 
                     <ul className="header--signedout">
                     <li>
-                    <Link to="/signup">Sign Up</Link>
+                    <Link to="/signUp">Sign Up</Link>
                     </li>
                     <li>
-                    <Link to="/signin">Sign In</Link>
+                    <Link to="/signIn">Sign In</Link>
                     </li>
                     </ul>
 

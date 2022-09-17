@@ -4,14 +4,14 @@ import Form from "./Form";
 
 export default class SignIn extends Component{
     state ={
-        username: '',
+        emailAddress: '',
         password: '',
         errors: [],
     }
 
     render(){
         const{
-            username,
+            emailAddress,
             password,
             errors,
         }= this.state;
@@ -31,9 +31,9 @@ export default class SignIn extends Component{
                             id="emailAddress"
                             name="emailAddress"
                             type="email"
-                            value={username}
+                            value={emailAddress}
                             onChange={this.change}
-                            placeholder="User Name" />
+                            placeholder="Email" />
                             <input
                             id="password"
                             name="password"
@@ -44,7 +44,7 @@ export default class SignIn extends Component{
                         </React.Fragment>
                     )}
                  />   
-                <p>Don't have a user account? Click here to <Link to="/sign-up">sign up</Link>!</p>
+                <p>Don't have a user account? Click here to <Link to="/signUp">sign up</Link>!</p>
                 
                 
             </div>
@@ -65,9 +65,9 @@ export default class SignIn extends Component{
 
     submit = ()=>{
         const {context} = this.props
-        const {from} = this.props.location.value || {from:{path:"/authenticated"}}
-        const {username,password} = this.state
-        context.actions.SignIn(username,password)
+        const {from} = this.props.location.value || {from:{path:"/"}}
+        const {emailAddress,password} = this.state
+        context.actions.signIn(emailAddress,password)
         .then(user=>{
             if(user == null){
                 this.setState(()=>{
