@@ -31,7 +31,7 @@ const CourseDetails =(props)=>{
            history.push('/')
         }
     })
-    .catch(err =>{
+    .catch((err) =>{
         console.log(err)
     })
 
