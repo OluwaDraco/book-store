@@ -41,7 +41,7 @@ const CourseDetails =(props)=>{
     <div>
         <div className="actions--bar">
         {
-            authUser && courseDetails.userId === context.authenticatedUser.id ?
+            authUser ?
         
         <React.Fragment>
         <div className="wrap">
