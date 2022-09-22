@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from "react";
 import Form from "./Form";
 import { useParams } from "react-router-dom";
+import { use } from "express/lib/application";
 
 const UpdateCourse =(props)=>{
 
@@ -9,6 +10,7 @@ const UpdateCourse =(props)=>{
     const password = authUser.password
     const emailAddress = authUser.emailAddress
     const [courseToUpdate, setCourseToUpdate] = useState([]);
+    const [errors, setUpdateErrors] = useState([])
 
     const {id} = useParams()
 
@@ -29,8 +31,10 @@ const UpdateCourse =(props)=>{
         estimatedTime
     }
     context.data.updateCourse(courseUpdate,id,emailAddress,password)
-    .then(errors =>{
-        if(errors.length){
+    .then(res =>{
+        res.errors ? setUpdateErrors(res.errors) : setUpdateErrors('');
+
+        if(!courseToUpdate.title || !courseToUpdate.description){
             console.error("Can't Update Course")
         }
         else{

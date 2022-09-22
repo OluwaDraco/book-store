@@ -19,6 +19,8 @@ const CourseDetails =(props)=>{
     })
    },[])
 
+   console.log( courseDetails)
+
    const toDelete = ()=>{
     const password = context.authenticatedUser.password
     const emailAddress = context.authenticatedUser.emailAddress
@@ -33,7 +35,11 @@ const CourseDetails =(props)=>{
     })
     .catch((err) =>{
         console.log(err)
-    })
+    });
+
+    console.log("deleted")
+
+
 
    }
 
@@ -41,12 +47,12 @@ const CourseDetails =(props)=>{
     <div>
         <div className="actions--bar">
         {
-            authUser ?
+            authUser && courseDetails.userId === authUser.userId ? 
         
         <React.Fragment>
         <div className="wrap">
                 <Link to={`/courses/${courseDetails.id}/update`} className="button">Update</Link>
-                <Link onClick={toDelete} to={`/courses/${courseDetails.id}/delete`} className="button">Delete Course</Link>
+                <button onClick={toDelete}  className="button">Delete Course</button>
                 <Link to="/" className="button">Return to List</Link>
             </div>
     

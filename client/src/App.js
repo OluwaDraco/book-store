@@ -40,8 +40,8 @@ const App =() =>(
       
       <Switch>
         <Route  exact path='/' component={Courses} />
+        <PrivateRoute exact path='/courses/:id/update' component={UpdateCourseWithContext} />
         <Route  path='/courses/:id' component={CourseDetailsWithContext} />
-        <PrivateRoute path='/courses/:id/update' component={UpdateCourseWithContext} />
         <Route path="/signIn" component={SignInWithContext}/> 
         <Route path="/signUp" component={SignUpWithContext}/> 
         <Route path="/signOut" component={SignOutWithContext}/> 
