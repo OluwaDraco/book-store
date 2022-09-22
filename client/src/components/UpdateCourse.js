@@ -1,44 +1,58 @@
 import React, {useState,useEffect} from "react";
 import Form from "./Form";
-import { useParams } from "react-router-dom";
-import { use } from "express/lib/application";
+import { useParams,useHistory } from "react-router-dom";
 
 const UpdateCourse =(props)=>{
 
     const {context} = props
+    const history = useHistory();
     const authUser = context.authenticatedUser
     const password = authUser.password
     const emailAddress = authUser.emailAddress
-    const [courseToUpdate, setCourseToUpdate] = useState([]);
-    const [errors, setUpdateErrors] = useState([])
+
 
     const {id} = useParams()
 
+   const [title, setTitle] = useState('');
+   const [description,setDescription] = useState('');
+   const [materialsNeeded,setMaterialsNeeded] = useState('');
+   const [estimatedTime,setEstimatedTime] = useState('');
+   const [errors,setUpdateErrors] = useState([])
+
    useEffect(()=>{
-    fetch(`http://localhost:5000/api/courses/${id}`)
-    .then((res)=>res.json())
-    .then((data)=>(setCourseToUpdate(data)  ))
-    .catch(err=>{
-        console.log("error fetching data",err)
-    })
-   },[])
+    context.data.getCourse(id,password,emailAddress)
+    .then(res=>{
+        if(res.course){
+            setTitle(res.courseDetails.title);
+            setDescription(res.courseDetails.description);
+            setMaterialsNeeded(res.courseDetails.materialsNeeded);
+            setEstimatedTime(res.courseDetails.estimatedTime);
+
+
+        }
+        else{
+            history.push('/error')
+
+        }
+
+    }
+        
+    )
+   })
+
+
 
    const submit = ()=>{
-    const courseUpdate ={
+    const courseData ={
         title,
         description,
         materialsNeeded,
         estimatedTime
     }
-    context.data.updateCourse(courseUpdate,id,emailAddress,password)
-    .then(res =>{
-        res.errors ? setUpdateErrors(res.errors) : setUpdateErrors('');
-
-        if(!courseToUpdate.title || !courseToUpdate.description){
-            console.error("Can't Update Course")
-        }
-        else{
-            this.props.history.push('/')
+    context.data.updateCourse(id,courseData,emailAddress,password)
+    .then(errors=>{
+        if(errors.length){
+            setUpdateErrors({errors});
         }
     })
     .catch(err =>{
@@ -52,17 +66,18 @@ const UpdateCourse =(props)=>{
     let name= event.target.name;
    let value = event.target.value;
     
-    if(name === "courseTitle"){
-        name= "title"
+   setTitle({
+    [name]:value
+   })
 
-    }
+    setDescription({
+        [name]:value
+    })
+    setEstimatedTime({
+        [name]:value
+    })
 
-    if(name==="courseDescription"){
-        name= 'description'
-    }
-
-    setCourseToUpdate({
-        ...courseToUpdate,
+    setMaterialsNeeded({
         [name]:value
     })
 }
@@ -71,12 +86,6 @@ const cancel =()=>{
     this.props.history.push('/')
 }
 
-const{
-    title,
-    description,
-    materialsNeeded,
-    estimatedTime
-} = courseToUpdate;
 
    return(
     <main>
