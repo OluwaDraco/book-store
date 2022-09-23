@@ -4,45 +4,35 @@ import { useParams,useHistory } from "react-router-dom";
 
 const UpdateCourse =(props)=>{
 
-    const {context} = props
-    const history = useHistory();
-    const authUser = context.authenticatedUser
-    const password = authUser.password
-    const emailAddress = authUser.emailAddress
+  const {context} = props
+  const history = useHistory();
+  const authUser = context.authenticatedUser
+  const password = authUser.password
+  const emailAddress = authUser.emailAddress
+  const {id} = useParams()
 
+  const [title, setTitle] = useState('');
+  const [description,setDescription] = useState('');
+  const [materialsNeeded,setMaterialsNeeded] = useState('');
+  const [estimatedTime,setEstimatedTime] = useState('');
+  const [errors,setUpdateErrors] = useState([])
 
-    const {id} = useParams()
-
-   const [title, setTitle] = useState('');
-   const [description,setDescription] = useState('');
-   const [materialsNeeded,setMaterialsNeeded] = useState('');
-   const [estimatedTime,setEstimatedTime] = useState('');
-   const [errors,setUpdateErrors] = useState([])
-
-   useEffect(()=>{
+  useEffect(()=>{
     context.data.getCourse(id,password,emailAddress)
-    .then(res=>{
+      .then(res=>{
         if(res){
-            setTitle(res.title);
-            setDescription(res.description);
-            setMaterialsNeeded(res.materialsNeeded);
-            setEstimatedTime(res.estimatedTime);
-
-
+          setTitle(res.title);
+          setDescription(res.description);
+          setMaterialsNeeded(res.materialsNeeded);
+          setEstimatedTime(res.estimatedTime);
+        } else {
+          history.push('/error')
         }
-        else{
-            history.push('/error')
+      }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  )}, [])
 
-        }
-
-    }
-        
-    )
-   })
-
-
-
-   const submit = ()=>{
+  const submit = ()=>{
     const courseData ={
         title,
         description,
@@ -52,74 +42,50 @@ const UpdateCourse =(props)=>{
     context.data.updateCourse(courseData,id,emailAddress,password)
     .then(errors=>{
         if(errors.length){
-            setUpdateErrors({errors});
+            setUpdateErrors(errors);
+        } else {
+          history.push('/');
         }
     })
     .catch(err =>{
         console.log(err)
-        this.props.history.push("/error")
+        history.push("/error")
     })
    }
 
+  const cancel =()=>{
+    history.push('/')
+  }
 
+return (
+    <div className="wrap course--update">
+      <h2>Update Course</h2>
+      <Form
+        cancel={cancel}
+        errors={errors}
+        submit={submit}
+        submitButtonText="Update Course"
+        elements={() => (
+          <div className="main--flex">
+            <div>
+              <label htmlFor="title">Course Title</label>
+              <input id="title" name="title" type="text" value={title} onChange={(e)=>{setTitle(e.target.value)}} />
 
-const cancel =()=>{
-    this.props.history.push('/')
+              <label htmlFor="description">Course Description</label>
+              <textarea id="description" name="description" value={description} onChange={(e)=>{setDescription(e.target.value)}} />
+            </div>
+            <div>
+              <label htmlFor="estimatedTime">Estimated Time</label>
+              <input id="estimatedTime" name="estimatedTime" type="text" value={estimatedTime} onChange={(e)=>{setEstimatedTime(e.target.value)}} />
+
+              <label htmlFor="materialsNeeded">Materials Needed</label>
+              <textarea id="materialsNeeded" name="materialsNeeded" value={materialsNeeded} onChange={(e)=>{setMaterialsNeeded(e.target.value)}} />
+            </div>
+          </div>
+        )} 
+      />
+    </div>
+  )
 }
-
-
-   return(
-    <main>
-        <div className="wrap">
-        <h2>Update Course</h2>
-            <Form 
-                cancel={cancel}
-                submit={submit}
-                submitButtonText="Update"
-                elements ={()=>(
-                    <React.Fragment>
-                        <input
-                            id="courseTitle"
-                            name="courseTitle"
-                            type="text"
-                            value={title}
-                            onChange={(e)=>{setTitle(e.target.value)}}
-                            placeholder="Course Title" />
-
-                            <textarea 
-                                id="courseDescription"
-                                name="courseDescription"
-                                onChange={(e)=>{setDescription(e.target.value)}}
-                                value={description}
-                                placeholder="Course Description"
-                            />
-
-                        <input
-                            id="estimatedTime"
-                            name="estimatedTime"
-                            type="text"
-                            value={estimatedTime}
-                            onChange={(e)=>{setEstimatedTime(e.target.value)}}
-                            placeholder="estimatedTime" />
-
-                        <textarea 
-                                id="materialsNeeded"
-                                name="materialsNeeded"
-                                value={materialsNeeded}
-                                onChange={(e)=>{setMaterialsNeeded(e.target.value)}}
-                                placeholder="Materials Needed"
-                            />  
-
-                    </React.Fragment>
-                )}
-
-            />
-        </div>
-    </main>
-   )
-
-}
-
-
 
 export default UpdateCourse
