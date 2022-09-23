@@ -1,4 +1,5 @@
 import React, {useState,useEffect} from "react";
+import ReactMarkdown from 'react-markdown'
 import { Link,useParams,useHistory } from "react-router-dom";
 
 const CourseDetails =(props)=>{
@@ -32,12 +33,15 @@ const CourseDetails =(props)=>{
         else{
            history.push('/')
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     })
     .catch((err) =>{
         console.log(err)
     });
 
     console.log("deleted")
+        
+
 
 
 
@@ -75,16 +79,23 @@ const CourseDetails =(props)=>{
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{courseDetails.title}</h4>
                         <p>By {courseDetails.User?.firstName}</p>
-                        <p>{courseDetails.description}</p>
+                        <ReactMarkdown>
+                        {courseDetails.description}
+                        </ReactMarkdown>
+                        
                     </div>
                     <div>
                         <h3 className="course--detail--title">Estimated Time</h3>
                         <p>{courseDetails.estimatedTime}</p>
 
                         <h3 className="course--detail--title">Materials Needed</h3>
+                        
                         <ul className="course--detail--list">
-                        {courseDetails.materialsNeeded}
+                        <ReactMarkdown>{courseDetails.materialsNeeded}</ReactMarkdown>
+                        
                         </ul>
+                       
+                        
 
                     </div>
                 </div>
