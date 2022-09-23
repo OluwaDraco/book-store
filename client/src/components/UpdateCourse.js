@@ -22,11 +22,11 @@ const UpdateCourse =(props)=>{
    useEffect(()=>{
     context.data.getCourse(id,password,emailAddress)
     .then(res=>{
-        if(res.course){
-            setTitle(res.courseDetails.title);
-            setDescription(res.courseDetails.description);
-            setMaterialsNeeded(res.courseDetails.materialsNeeded);
-            setEstimatedTime(res.courseDetails.estimatedTime);
+        if(res){
+            setTitle(res.title);
+            setDescription(res.description);
+            setMaterialsNeeded(res.materialsNeeded);
+            setEstimatedTime(res.estimatedTime);
 
 
         }
@@ -49,7 +49,7 @@ const UpdateCourse =(props)=>{
         materialsNeeded,
         estimatedTime
     }
-    context.data.updateCourse(id,courseData,emailAddress,password)
+    context.data.updateCourse(courseData,id,emailAddress,password)
     .then(errors=>{
         if(errors.length){
             setUpdateErrors({errors});
@@ -62,25 +62,6 @@ const UpdateCourse =(props)=>{
    }
 
 
-   const change=(event)=>{
-    let name= event.target.name;
-   let value = event.target.value;
-    
-   setTitle({
-    [name]:value
-   })
-
-    setDescription({
-        [name]:value
-    })
-    setEstimatedTime({
-        [name]:value
-    })
-
-    setMaterialsNeeded({
-        [name]:value
-    })
-}
 
 const cancel =()=>{
     this.props.history.push('/')
@@ -102,13 +83,13 @@ const cancel =()=>{
                             name="courseTitle"
                             type="text"
                             value={title}
-                            onChange={change}
+                            onChange={(e)=>{setTitle(e.target.value)}}
                             placeholder="Course Title" />
 
                             <textarea 
                                 id="courseDescription"
                                 name="courseDescription"
-                                onChange={change}
+                                onChange={(e)=>{setDescription(e.target.value)}}
                                 value={description}
                                 placeholder="Course Description"
                             />
@@ -118,14 +99,14 @@ const cancel =()=>{
                             name="estimatedTime"
                             type="text"
                             value={estimatedTime}
-                            onChange={change}
+                            onChange={(e)=>{setEstimatedTime(e.target.value)}}
                             placeholder="estimatedTime" />
 
                         <textarea 
                                 id="materialsNeeded"
                                 name="materialsNeeded"
                                 value={materialsNeeded}
-                                onChange={change}
+                                onChange={(e)=>{setMaterialsNeeded(e.target.value)}}
                                 placeholder="Materials Needed"
                             />  
 
