@@ -5,6 +5,9 @@ import { Consumer } from './Context';
 
 export default ({ component: Component, ...rest }) => {
   return (
+
+        //if user is logged in, they are allowed in the protected route and if not then redirect to login page
+
     <Consumer>
       { context => (
         <Route

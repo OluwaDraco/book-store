@@ -11,6 +11,7 @@ const UpdateCourse =(props)=>{
   const emailAddress = authUser.emailAddress
   const {id} = useParams()
 
+//states
   const [title, setTitle] = useState('');
   const [description,setDescription] = useState('');
   const [materialsNeeded,setMaterialsNeeded] = useState('');
@@ -18,6 +19,7 @@ const UpdateCourse =(props)=>{
   const [errors,setUpdateErrors] = useState([])
 
   useEffect(()=>{
+    //get course from DB
     context.data.getCourse(id,password,emailAddress)
       .then(res=>{
         if(res){

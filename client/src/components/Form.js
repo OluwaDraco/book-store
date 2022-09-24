@@ -35,7 +35,7 @@ const Form = (props) => {
 
 function ErrorsDisplay({ errors }) {
   let errorsDisplay = null;
-
+//Displays validation errors if any is encountered 
   if (errors.length) {
     errorsDisplay = (
       <div className="validation--errors">
