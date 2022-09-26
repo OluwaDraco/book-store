@@ -7,11 +7,12 @@ const UpdateCourse =(props)=>{
     const {context} = props
     const history = useHistory();
     const authUser = context.authenticatedUser
+    //authenticated user credentials 
     const password = authUser.password
     const emailAddress = authUser.emailAddress
 
 
-
+//set State
    const [title, setTitle] = useState('');
    const [description,setDescription] = useState('');
    const [materialsNeeded,setMaterialsNeeded] = useState('');
@@ -30,6 +31,7 @@ const UpdateCourse =(props)=>{
         userId: authUser.userId
 
     }
+    //creates the new course using the CourseData and auth
     context.data.createCourse(courseData,emailAddress,password)
     .then(errors=>{
         if(errors.length){
@@ -66,6 +68,7 @@ const cancel =()=>{
           <div>
             <label htmlFor="title">Course Title</label>
             <input id="title" name="title" type="text" value={title} onChange={(e)=>{setTitle(e.target.value)}} />
+            <p>By {authUser.firstName} {authUser.lastName}</p>
 
             <label htmlFor="description">Course Description</label>
             <textarea id="description" name="description" value={description} onChange={(e)=>{setDescription(e.target.value)}} />

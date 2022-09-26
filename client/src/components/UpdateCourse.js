@@ -16,6 +16,7 @@ const UpdateCourse =(props)=>{
   const [description,setDescription] = useState('');
   const [materialsNeeded,setMaterialsNeeded] = useState('');
   const [estimatedTime,setEstimatedTime] = useState('');
+  const [owner,setOwner] = useState('')
   const [errors,setUpdateErrors] = useState([])
 
   useEffect(()=>{
@@ -23,6 +24,7 @@ const UpdateCourse =(props)=>{
     context.data.getCourse(id,password,emailAddress)
       .then(res=>{
         if(res){
+          setOwner(res.User)
           setTitle(res.title);
           setDescription(res.description);
           setMaterialsNeeded(res.materialsNeeded);
@@ -41,6 +43,7 @@ const UpdateCourse =(props)=>{
         materialsNeeded,
         estimatedTime
     }
+    //update the course using the data provided from the form 
     context.data.updateCourse(courseData,id,emailAddress,password)
     .then(errors=>{
         if(errors.length){

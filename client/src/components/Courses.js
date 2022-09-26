@@ -8,6 +8,7 @@ class Courses extends React.Component{
         courses:[]
     }
     componentDidMount(){
+        //fecthes data from the course api and parses it into json 
         fetch('http://localhost:5000/api/courses')
         .then((res)=>res.json())
         .then((response)=>this.setState({courses:response}))
@@ -18,6 +19,7 @@ class Courses extends React.Component{
     render(){
 
         const courses = this.state.courses
+        //maps over Course state to display list of courses 
         const courseList = courses.map((course)=>{
             return(
                 <Link  className="course--module course--link" to={`/courses/${course.id}`} key={course.id}>

@@ -63,7 +63,11 @@ const CourseDetails =(props)=>{
         </React.Fragment>
         :(
             <React.Fragment>
-            <Link to="/" className="button">Return to List</Link>
+            <div className="wrap">
+
+            <Link to="/" className="button button-secondary">Return to List</Link>
+
+            </div>
 
             </React.Fragment>
         )}
@@ -78,7 +82,7 @@ const CourseDetails =(props)=>{
                     <div>
                         <h3 className="course--detail--title">Course</h3>
                         <h4 className="course--name">{courseDetails.title}</h4>
-                        <p>By {courseDetails.User?.firstName}</p>
+                        <p>By {courseDetails.User?.firstName} {courseDetails.User?.lastName}</p>
                         <ReactMarkdown>
                         {courseDetails.description}
                         </ReactMarkdown>

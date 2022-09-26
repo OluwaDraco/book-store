@@ -8,7 +8,7 @@ const Form = (props) => {
     submitButtonText,
     elements,
   } = props;
-
+//prevent rerendering of component
   function handleSubmit(event) {
     event.preventDefault();
     submit();
